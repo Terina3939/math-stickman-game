@@ -1,21 +1,18 @@
 // utils/mathGenerator.js
-// 根据难度和关卡生成数学题
 
-// 根据关卡数决定选项数量（6关后变4个）
 function getOptionCount(level) {
   return level >= 6 ? 4 : 3
 }
 
-// 根据关卡数获取掉落时间(ms)
-function getFallDuration(level) {
-  if (level <= 3)  return 4000
-  if (level <= 6)  return 3000
-  if (level <= 10) return 2200
-  if (level <= 15) return 1600
-  return 1200
+// 返回固定class档位（s1-s5）和对应毫秒数（用于setTimeout）
+function getFallInfo(level) {
+  if (level <= 3)  return { cls: 's1', ms: 4000 }
+  if (level <= 6)  return { cls: 's2', ms: 3000 }
+  if (level <= 10) return { cls: 's3', ms: 2200 }
+  if (level <= 15) return { cls: 's4', ms: 1600 }
+  return               { cls: 's5', ms: 1200 }
 }
 
-// 根据关卡数获取阶段名称
 function getStageName(level) {
   if (level <= 3)  return '轻松'
   if (level <= 6)  return '加速'
@@ -25,8 +22,7 @@ function getStageName(level) {
 }
 
 function generateQuestion(difficulty) {
-  let question = ''
-  let answer = 0
+  let question = '', answer = 0
 
   if (difficulty === 'easy') {
     const type = Math.random() < 0.5 ? 'add' : 'sub'
@@ -82,7 +78,6 @@ function generateQuestion(difficulty) {
       answer = a * b + c
     }
   }
-
   return { question, answer }
 }
 
@@ -90,7 +85,6 @@ function generateOptions(answer, count) {
   const wrong = new Set()
   const offsets = [1, 2, 3, 5, 8, 10]
   let attempts = 0
-
   while (wrong.size < count - 1 && attempts < 50) {
     attempts++
     const offset = offsets[Math.floor(Math.random() * offsets.length)]
@@ -98,7 +92,6 @@ function generateOptions(answer, count) {
     const val = answer + sign * offset
     if (val > 0 && val !== answer) wrong.add(val)
   }
-
   const options = [answer, ...wrong]
   for (let i = options.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -107,4 +100,4 @@ function generateOptions(answer, count) {
   return options
 }
 
-module.exports = { generateQuestion, generateOptions, getOptionCount, getFallDuration, getStageName }
+module.exports = { generateQuestion, generateOptions, getOptionCount, getFallInfo, getStageName }

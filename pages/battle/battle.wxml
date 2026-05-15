@@ -26,29 +26,27 @@
       <text class="stickman {{playerAttacking ? 'attack-anim' : ''}}">🧍</text>
       <text class="role-label">勇士</text>
     </view>
-
     <view class="middle-area">
       <text class="wave {{showWave ? 'wave-anim' : ''}}">💥</text>
     </view>
-
     <view class="monster-side">
       <text class="monster {{monsterHit ? 'hit-anim' : ''}} {{monsterAttacking ? 'monster-attack-anim' : ''}}">{{monsterEmoji}}</text>
       <text class="role-label">怪物</text>
     </view>
   </view>
 
-  <!-- 掉落倒计时条 -->
-  <view class="timer-bar-wrap" wx:if="{{options.length > 0 && !showNextBtn}}">
-    <view class="timer-bar" style="animation-duration: {{fallDuration}}ms"></view>
+  <!-- 倒计时条 -->
+  <view class="timer-bar-wrap" wx:if="{{timerRunning}}">
+    <view class="timer-bar timer-{{timerClass}}"></view>
   </view>
 
-  <!-- 掉落选项 -->
+  <!-- 掉落选项：用 falling-s/m/l/xl/xxl 五档固定class控制速度 -->
   <view class="falling-area" wx:if="{{!showNextBtn}}">
     <view
       wx:for="{{options}}"
       wx:key="index"
-      class="option-item"
-      style="left:{{item.left}}%; animation-duration: {{fallDuration}}ms; animation-delay: 0s"
+      class="option-item fall-{{fallClass}}"
+      style="left:{{item.left}}%"
       bindtap="selectOption"
       data-value="{{item.value}}"
     >
@@ -61,7 +59,7 @@
     <text>{{feedbackMsg}}</text>
   </view>
 
-  <!-- 通关后：下一关按钮 -->
+  <!-- 通关按钮 -->
   <view class="next-area" wx:if="{{showNextBtn}}">
     <text class="next-title">🎉 怪物消灭！</text>
     <text class="next-sub">第 {{level}} 关通过</text>

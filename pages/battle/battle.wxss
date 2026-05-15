@@ -16,59 +16,16 @@
   background: rgba(0,0,0,0.5);
   border-bottom: 2rpx solid #333366;
 }
-
-.hp-area {
-  display: flex;
-  gap: 4rpx;
-}
-
-.heart { font-size: 30rpx; transition: all 0.3s; }
+.hp-area { display: flex; gap: 4rpx; }
+.heart { font-size: 30rpx; transition: opacity 0.3s; }
 .heart.dead { filter: grayscale(100%); opacity: 0.3; }
-
-.stage-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stage-name {
-  font-size: 20rpx;
-  color: #f5a623;
-  font-weight: bold;
-}
-
-.level-text {
-  font-size: 26rpx;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.monster-hp-area {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6rpx;
-}
-
-.monster-hp-bar {
-  width: 150rpx;
-  height: 14rpx;
-  background: #333355;
-  border-radius: 7rpx;
-  overflow: hidden;
-}
-
-.monster-hp-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ff4444, #ff8800);
-  border-radius: 7rpx;
-  transition: width 0.4s ease;
-}
-
-.monster-hp-text {
-  font-size: 18rpx;
-  color: #ff8888;
-}
+.stage-info { display: flex; flex-direction: column; align-items: center; }
+.stage-name { font-size: 20rpx; color: #f5a623; font-weight: bold; }
+.level-text { font-size: 26rpx; color: #ffffff; font-weight: bold; }
+.monster-hp-area { display: flex; flex-direction: column; align-items: flex-end; gap: 6rpx; }
+.monster-hp-bar { width: 150rpx; height: 14rpx; background: #333355; border-radius: 7rpx; overflow: hidden; }
+.monster-hp-fill { height: 100%; background: linear-gradient(90deg, #ff4444, #ff8800); border-radius: 7rpx; transition: width 0.4s ease; }
+.monster-hp-text { font-size: 18rpx; color: #ff8888; }
 
 /* 战斗场景 */
 .battle-scene {
@@ -78,7 +35,6 @@
   padding: 30rpx 20rpx;
   height: 280rpx;
 }
-
 .player-side, .monster-side {
   display: flex;
   flex-direction: column;
@@ -86,7 +42,6 @@
   gap: 8rpx;
   position: relative;
 }
-
 .question-bubble {
   position: absolute;
   top: -80rpx;
@@ -99,15 +54,10 @@
   white-space: nowrap;
   opacity: 0;
   transform: translateY(10rpx);
-  transition: all 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
   z-index: 10;
 }
-
-.question-bubble.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.question-bubble.visible { opacity: 1; transform: translateY(0); }
 .question-bubble::after {
   content: '';
   position: absolute;
@@ -117,7 +67,6 @@
   border: 8rpx solid transparent;
   border-top-color: #ffffff;
 }
-
 .stickman { font-size: 100rpx; display: block; }
 .monster  { font-size: 100rpx; display: block; }
 .role-label { font-size: 20rpx; color: #888899; }
@@ -128,14 +77,7 @@
   50%  { transform: translateX(40rpx); }
   100% { transform: translateX(0); }
 }
-
-.middle-area {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100rpx;
-}
-
+.middle-area { display: flex; align-items: center; justify-content: center; width: 100rpx; }
 .wave { font-size: 60rpx; opacity: 0; }
 .wave-anim { animation: waveMove 0.5s ease forwards; }
 @keyframes waveMove {
@@ -143,14 +85,12 @@
   50%  { opacity: 1; transform: translateX(0) scale(1.2); }
   100% { opacity: 0; transform: translateX(40rpx) scale(0.8); }
 }
-
 .hit-anim { animation: monsterHit 0.4s ease; }
 @keyframes monsterHit {
   0%,100% { transform: translateX(0); }
   25%     { transform: translateX(20rpx) rotate(10deg); }
   75%     { transform: translateX(-10rpx) rotate(-5deg); }
 }
-
 .monster-attack-anim { animation: monsterAttack 0.6s ease; }
 @keyframes monsterAttack {
   0%   { transform: translateX(0); }
@@ -158,7 +98,7 @@
   100% { transform: translateX(0) scale(1); }
 }
 
-/* 倒计时进度条 */
+/* 倒计时条：5档固定class，不用内联style */
 .timer-bar-wrap {
   height: 10rpx;
   background: #222244;
@@ -166,30 +106,35 @@
   border-radius: 5rpx;
   overflow: hidden;
 }
-
 .timer-bar {
   height: 100%;
   width: 100%;
   background: linear-gradient(90deg, #38ef7d, #f5a623, #ff4444);
   border-radius: 5rpx;
-  animation: timerShrink linear forwards;
   transform-origin: left;
+  animation: timerShrink linear forwards;
 }
-
+.timer-s1  { animation-duration: 4000ms; }
+.timer-s2  { animation-duration: 3000ms; }
+.timer-s3  { animation-duration: 2200ms; }
+.timer-s4  { animation-duration: 1600ms; }
+.timer-s5  { animation-duration: 1200ms; }
 @keyframes timerShrink {
   from { transform: scaleX(1); }
   to   { transform: scaleX(0); }
 }
 
-/* 掉落选项 */
+/* 掉落选项区域 */
 .falling-area {
   position: relative;
-  height: 300rpx;
+  height: 320rpx;
   margin: 10rpx 0;
 }
 
+/* 选项本体：不在这里写animation，由fall-class控制 */
 .option-item {
   position: absolute;
+  top: 0;
   background: linear-gradient(135deg, #0f3460, #533483);
   border: 2rpx solid #8866ff;
   border-radius: 16rpx;
@@ -198,13 +143,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fallDown linear forwards;
+  /* 关键：用transform而非top做动画，性能更好不闪烁 */
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
 }
 
+/* 5档掉落速度，对应5个阶段 */
+.fall-s1 { animation: fallDown 4000ms linear forwards; }
+.fall-s2 { animation: fallDown 3000ms linear forwards; }
+.fall-s3 { animation: fallDown 2200ms linear forwards; }
+.fall-s4 { animation: fallDown 1600ms linear forwards; }
+.fall-s5 { animation: fallDown 1200ms linear forwards; }
+
 @keyframes fallDown {
-  0%   { top: -80rpx; opacity: 0; }
-  15%  { opacity: 1; }
-  100% { top: 220rpx; opacity: 1; }
+  0%   { transform: translateY(-80rpx); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translateY(300rpx); opacity: 1; }
 }
 
 .option-text {
@@ -226,10 +180,8 @@
   animation: fadeIn 0.3s ease;
   z-index: 100;
 }
-
 .correct { background: rgba(56,239,125,0.92); color: #003300; }
-.wrong   { background: rgba(255,80,80,0.92); color: #ffffff; }
-
+.wrong   { background: rgba(255,80,80,0.92);  color: #ffffff; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateX(-50%) translateY(20rpx); }
   to   { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -245,18 +197,8 @@
   gap: 24rpx;
   padding: 40rpx;
 }
-
-.next-title {
-  font-size: 52rpx;
-  font-weight: bold;
-  color: #f5a623;
-}
-
-.next-sub {
-  font-size: 28rpx;
-  color: #aaaacc;
-}
-
+.next-title { font-size: 52rpx; font-weight: bold; color: #f5a623; }
+.next-sub   { font-size: 28rpx; color: #aaaacc; }
 .next-btn {
   width: 500rpx;
   padding: 30rpx;
@@ -267,7 +209,6 @@
   font-weight: bold;
   color: #003300;
 }
-
 .settle-btn {
   width: 500rpx;
   padding: 30rpx;
