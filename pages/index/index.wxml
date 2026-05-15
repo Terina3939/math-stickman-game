@@ -1,0 +1,41 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <view class="title-area">
+    <text class="game-title">🔥 数学火柴人</text>
+    <text class="game-subtitle">数学战斗小游戏</text>
+  </view>
+
+  <view class="stickman-area">
+    <text class="stickman">🧍</text>
+    <text class="vs">VS</text>
+    <text class="monster">👹</text>
+  </view>
+
+  <view class="difficulty-area">
+    <text class="choose-text">选择难度</text>
+
+    <view class="diff-btn easy" bindtap="selectDifficulty" data-level="easy">
+      <text class="diff-icon">⭐</text>
+      <view class="diff-info">
+        <text class="diff-name">初级</text>
+        <text class="diff-desc">加减法 · 5关</text>
+      </view>
+    </view>
+
+    <view class="diff-btn medium" bindtap="selectDifficulty" data-level="medium">
+      <text class="diff-icon">⭐⭐</text>
+      <view class="diff-info">
+        <text class="diff-name">中级</text>
+        <text class="diff-desc">乘除法 · 8关</text>
+      </view>
+    </view>
+
+    <view class="diff-btn hard" bindtap="selectDifficulty" data-level="hard">
+      <text class="diff-icon">⭐⭐⭐</text>
+      <view class="diff-info">
+        <text class="diff-name">高级</text>
+        <text class="diff-desc">混合运算 · 10关</text>
+      </view>
+    </view>
+  </view>
+</view>

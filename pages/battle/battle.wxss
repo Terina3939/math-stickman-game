@@ -1,0 +1,258 @@
+/* pages/battle/battle.wxss */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0d0d1a 0%, #1a1a2e 60%, #16213e 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 状态栏 */
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  background: rgba(0,0,0,0.4);
+  border-bottom: 2rpx solid #333366;
+}
+
+.hp-area, .monster-hp-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+}
+
+.hp-label {
+  font-size: 20rpx;
+  color: #aaaacc;
+}
+
+.hp-hearts {
+  display: flex;
+  gap: 4rpx;
+}
+
+.heart {
+  font-size: 28rpx;
+  transition: all 0.3s;
+}
+
+.heart.dead {
+  filter: grayscale(100%);
+  opacity: 0.3;
+}
+
+.level-info {
+  text-align: center;
+}
+
+.level-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #f5a623;
+}
+
+.monster-hp-bar {
+  width: 150rpx;
+  height: 14rpx;
+  background: #333355;
+  border-radius: 7rpx;
+  overflow: hidden;
+}
+
+.monster-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff4444, #ff8800);
+  border-radius: 7rpx;
+  transition: width 0.4s ease;
+}
+
+.monster-hp-text {
+  font-size: 18rpx;
+  color: #ff8888;
+}
+
+/* 战斗场景 */
+.battle-scene {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 40rpx 20rpx;
+  height: 300rpx;
+}
+
+.player-side, .monster-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  position: relative;
+}
+
+.question-bubble {
+  position: absolute;
+  top: -80rpx;
+  background: #ffffff;
+  color: #1a1a2e;
+  padding: 10rpx 20rpx;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(10rpx);
+  transition: all 0.3s;
+}
+
+.question-bubble.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.question-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -16rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8rpx solid transparent;
+  border-top-color: #ffffff;
+}
+
+.question-text {
+  font-size: 26rpx;
+}
+
+.stickman {
+  font-size: 100rpx;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.attack-anim {
+  animation: playerAttack 0.6s ease;
+}
+
+@keyframes playerAttack {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(40rpx); }
+  100% { transform: translateX(0); }
+}
+
+.middle-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120rpx;
+}
+
+.wave {
+  font-size: 60rpx;
+  opacity: 0;
+}
+
+.wave-anim {
+  animation: waveMove 0.6s ease forwards;
+}
+
+@keyframes waveMove {
+  0% { opacity: 1; transform: translateX(-60rpx) scale(0.5); }
+  50% { opacity: 1; transform: translateX(0) scale(1.2); }
+  100% { opacity: 0; transform: translateX(40rpx) scale(0.8); }
+}
+
+.monster {
+  font-size: 100rpx;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.hit-anim {
+  animation: monsterHit 0.4s ease;
+}
+
+@keyframes monsterHit {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(20rpx) rotate(10deg); }
+  75% { transform: translateX(-10rpx) rotate(-5deg); }
+}
+
+.monster-attack-anim {
+  animation: monsterAttack 0.7s ease;
+}
+
+@keyframes monsterAttack {
+  0% { transform: translateX(0); }
+  40% { transform: translateX(-50rpx) scale(1.2); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+.role-label {
+  font-size: 22rpx;
+  color: #888899;
+}
+
+/* 掉落选项区域 */
+.falling-area {
+  position: relative;
+  height: 280rpx;
+  margin: 0 20rpx;
+}
+
+.option-item {
+  position: absolute;
+  top: 0;
+  background: linear-gradient(135deg, #0f3460, #533483);
+  border: 2rpx solid #8866ff;
+  border-radius: 16rpx;
+  width: 160rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fallDown 1.5s ease forwards;
+  cursor: pointer;
+}
+
+@keyframes fallDown {
+  0% { top: -80rpx; opacity: 0; }
+  30% { opacity: 1; }
+  100% { top: 180rpx; opacity: 1; }
+}
+
+.option-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* 反馈 */
+.feedback {
+  position: fixed;
+  bottom: 80rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 16rpx 50rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  animation: fadeIn 0.3s ease;
+}
+
+.correct {
+  background: rgba(56, 239, 125, 0.9);
+  color: #003300;
+}
+
+.wrong {
+  background: rgba(255, 80, 80, 0.9);
+  color: #ffffff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(20rpx); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}

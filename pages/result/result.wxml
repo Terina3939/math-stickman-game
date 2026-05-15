@@ -1,0 +1,19 @@
+<!-- pages/result/result.wxml -->
+<view class="container">
+
+  <view class="result-area">
+    <text class="result-emoji">{{isWin ? '🏆' : '💀'}}</text>
+    <text class="result-title">{{isWin ? '关卡胜利！' : '游戏结束'}}</text>
+    <text class="result-sub">{{isWin ? '怪物被消灭了！' : '勇士倒下了...'}}</text>
+  </view>
+
+  <view class="btn-area">
+    <view class="btn-retry" bindtap="retry">
+      <text>🔄 再来一次</text>
+    </view>
+    <view class="btn-home" bindtap="goHome">
+      <text>🏠 返回主页</text>
+    </view>
+  </view>
+
+</view>

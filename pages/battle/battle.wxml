@@ -1,0 +1,69 @@
+<!-- pages/battle/battle.wxml -->
+<view class="container">
+
+  <!-- 顶部状态栏 -->
+  <view class="status-bar">
+    <view class="hp-area">
+      <text class="hp-label">生命</text>
+      <view class="hp-hearts">
+        <text wx:for="{{heartList}}" wx:key="index" class="heart {{item ? 'alive' : 'dead'}}">❤️</text>
+      </view>
+    </view>
+    <view class="level-info">
+      <text class="level-text">关卡 {{level}}</text>
+    </view>
+    <view class="monster-hp-area">
+      <text class="hp-label">怪物</text>
+      <view class="monster-hp-bar">
+        <view class="monster-hp-fill" style="width:{{monsterHpPercent}}%"></view>
+      </view>
+      <text class="monster-hp-text">{{monsterHp}}/{{monsterMaxHp}}</text>
+    </view>
+  </view>
+
+  <!-- 战斗场景 -->
+  <view class="battle-scene">
+
+    <!-- 左侧火柴人 -->
+    <view class="player-side">
+      <view class="question-bubble {{questionVisible ? 'visible' : ''}}">
+        <text class="question-text">{{currentQuestion}}</text>
+      </view>
+      <text class="stickman {{playerAttacking ? 'attack-anim' : ''}}">🧍</text>
+      <text class="role-label">勇士</text>
+    </view>
+
+    <!-- 中间特效 -->
+    <view class="middle-area">
+      <text class="wave {{showWave ? 'wave-anim' : ''}}">💥</text>
+    </view>
+
+    <!-- 右侧怪物 -->
+    <view class="monster-side">
+      <text class="monster {{monsterHit ? 'hit-anim' : ''}} {{monsterAttacking ? 'monster-attack-anim' : ''}}">{{monsterEmoji}}</text>
+      <text class="role-label">怪物</text>
+    </view>
+
+  </view>
+
+  <!-- 掉落的选项 -->
+  <view class="falling-area">
+    <view
+      wx:for="{{options}}"
+      wx:key="index"
+      class="option-item"
+      style="animation-delay: {{index * 0.2}}s; left: {{item.left}}%"
+      bindtap="selectOption"
+      data-value="{{item.value}}"
+      data-index="{{index}}"
+    >
+      <text class="option-text">{{item.value}}</text>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="feedback {{feedbackType}}" wx:if="{{feedbackMsg}}">
+    <text>{{feedbackMsg}}</text>
+  </view>
+
+</view>

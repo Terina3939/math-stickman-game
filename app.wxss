@@ -1,0 +1,16 @@
+page {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  font-family: 'PingFang SC', sans-serif;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin: 20rpx auto;
+  border: none;
+}
