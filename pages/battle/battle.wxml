@@ -1,19 +1,15 @@
-<!-- pages/battle/battle.wxml -->
 <view class="container">
 
   <!-- 顶部状态栏 -->
   <view class="status-bar">
     <view class="hp-area">
-      <text class="hp-label">生命</text>
-      <view class="hp-hearts">
-        <text wx:for="{{heartList}}" wx:key="index" class="heart {{item ? 'alive' : 'dead'}}">❤️</text>
-      </view>
+      <text wx:for="{{heartList}}" wx:key="index" class="heart {{item ? '' : 'dead'}}">❤️</text>
     </view>
-    <view class="level-info">
-      <text class="level-text">关卡 {{level}}</text>
+    <view class="stage-info">
+      <text class="stage-name">{{stageName}}</text>
+      <text class="level-text">第 {{level}} 关</text>
     </view>
     <view class="monster-hp-area">
-      <text class="hp-label">怪物</text>
       <view class="monster-hp-bar">
         <view class="monster-hp-fill" style="width:{{monsterHpPercent}}%"></view>
       </view>
@@ -23,8 +19,6 @@
 
   <!-- 战斗场景 -->
   <view class="battle-scene">
-
-    <!-- 左侧火柴人 -->
     <view class="player-side">
       <view class="question-bubble {{questionVisible ? 'visible' : ''}}">
         <text class="question-text">{{currentQuestion}}</text>
@@ -33,37 +27,50 @@
       <text class="role-label">勇士</text>
     </view>
 
-    <!-- 中间特效 -->
     <view class="middle-area">
       <text class="wave {{showWave ? 'wave-anim' : ''}}">💥</text>
     </view>
 
-    <!-- 右侧怪物 -->
     <view class="monster-side">
       <text class="monster {{monsterHit ? 'hit-anim' : ''}} {{monsterAttacking ? 'monster-attack-anim' : ''}}">{{monsterEmoji}}</text>
       <text class="role-label">怪物</text>
     </view>
-
   </view>
 
-  <!-- 掉落的选项 -->
-  <view class="falling-area">
+  <!-- 掉落倒计时条 -->
+  <view class="timer-bar-wrap" wx:if="{{options.length > 0 && !showNextBtn}}">
+    <view class="timer-bar" style="animation-duration: {{fallDuration}}ms"></view>
+  </view>
+
+  <!-- 掉落选项 -->
+  <view class="falling-area" wx:if="{{!showNextBtn}}">
     <view
       wx:for="{{options}}"
       wx:key="index"
       class="option-item"
-      style="animation-delay: {{index * 0.2}}s; left: {{item.left}}%"
+      style="left:{{item.left}}%; animation-duration: {{fallDuration}}ms; animation-delay: 0s"
       bindtap="selectOption"
       data-value="{{item.value}}"
-      data-index="{{index}}"
     >
       <text class="option-text">{{item.value}}</text>
     </view>
   </view>
 
-  <!-- 提示信息 -->
+  <!-- 反馈提示 -->
   <view class="feedback {{feedbackType}}" wx:if="{{feedbackMsg}}">
     <text>{{feedbackMsg}}</text>
+  </view>
+
+  <!-- 通关后：下一关按钮 -->
+  <view class="next-area" wx:if="{{showNextBtn}}">
+    <text class="next-title">🎉 怪物消灭！</text>
+    <text class="next-sub">第 {{level}} 关通过</text>
+    <view class="next-btn" bindtap="goNextLevel">
+      <text>⚔️ 进入下一关</text>
+    </view>
+    <view class="settle-btn" bindtap="goSettle">
+      <text>🏆 结算上榜</text>
+    </view>
   </view>
 
 </view>

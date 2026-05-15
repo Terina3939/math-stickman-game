@@ -1,16 +1,17 @@
-// pages/index/index.js
 const app = getApp()
 
 Page({
   data: {},
 
   selectDifficulty(e) {
-    const level = e.currentTarget.dataset.level
-    app.globalData.difficulty = level
-    app.globalData.currentLevel = 1
-
+    const difficulty = e.currentTarget.dataset.level
+    app.globalData.difficulty = difficulty
     wx.navigateTo({
-      url: `/pages/levels/levels?difficulty=${level}`
+      url: `/pages/battle/battle?difficulty=${difficulty}&level=1`
     })
+  },
+
+  goLeaderboard() {
+    wx.navigateTo({ url: '/pages/leaderboard/leaderboard' })
   }
 })

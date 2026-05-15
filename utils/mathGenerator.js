@@ -1,12 +1,34 @@
 // utils/mathGenerator.js
-// 根据难度生成数学题和干扰选项
+// 根据难度和关卡生成数学题
+
+// 根据关卡数决定选项数量（6关后变4个）
+function getOptionCount(level) {
+  return level >= 6 ? 4 : 3
+}
+
+// 根据关卡数获取掉落时间(ms)
+function getFallDuration(level) {
+  if (level <= 3)  return 4000
+  if (level <= 6)  return 3000
+  if (level <= 10) return 2200
+  if (level <= 15) return 1600
+  return 1200
+}
+
+// 根据关卡数获取阶段名称
+function getStageName(level) {
+  if (level <= 3)  return '轻松'
+  if (level <= 6)  return '加速'
+  if (level <= 10) return '紧绷'
+  if (level <= 15) return '极限'
+  return '地狱'
+}
 
 function generateQuestion(difficulty) {
   let question = ''
   let answer = 0
 
   if (difficulty === 'easy') {
-    // 初级：加减法，数字范围1-20
     const type = Math.random() < 0.5 ? 'add' : 'sub'
     if (type === 'add') {
       const a = Math.floor(Math.random() * 19) + 1
@@ -19,9 +41,7 @@ function generateQuestion(difficulty) {
       question = `${a} - ${b} = ?`
       answer = a - b
     }
-
   } else if (difficulty === 'medium') {
-    // 中级：乘除法，乘法表范围
     const type = Math.random() < 0.5 ? 'mul' : 'div'
     if (type === 'mul') {
       const a = Math.floor(Math.random() * 9) + 2
@@ -30,36 +50,31 @@ function generateQuestion(difficulty) {
       answer = a * b
     } else {
       const b = Math.floor(Math.random() * 8) + 2
-      const answer0 = Math.floor(Math.random() * 9) + 2
-      const a = b * answer0
-      question = `${a} ÷ ${b} = ?`
-      answer = answer0
+      const ans = Math.floor(Math.random() * 9) + 2
+      question = `${b * ans} ÷ ${b} = ?`
+      answer = ans
     }
-
   } else {
-    // 高级：两步混合运算
     const type = Math.floor(Math.random() * 3)
     if (type === 0) {
-      // (a + b) × c
       const a = Math.floor(Math.random() * 8) + 2
       const b = Math.floor(Math.random() * 8) + 2
       const c = Math.floor(Math.random() * 5) + 2
       question = `(${a} + ${b}) × ${c} = ?`
       answer = (a + b) * c
     } else if (type === 1) {
-      // a × b - c
       const a = Math.floor(Math.random() * 7) + 2
       const b = Math.floor(Math.random() * 7) + 2
       const c = Math.floor(Math.random() * 10) + 1
-      answer = a * b - c
-      if (answer > 0) {
+      const res = a * b - c
+      if (res > 0) {
         question = `${a} × ${b} - ${c} = ?`
+        answer = res
       } else {
         question = `${a} × ${b} + ${c} = ?`
         answer = a * b + c
       }
     } else {
-      // a × b + c × d 简化版
       const a = Math.floor(Math.random() * 6) + 2
       const b = Math.floor(Math.random() * 6) + 2
       const c = Math.floor(Math.random() * 5) + 1
@@ -68,25 +83,23 @@ function generateQuestion(difficulty) {
     }
   }
 
-  const options = generateOptions(answer)
-  return { question, answer, options }
+  return { question, answer }
 }
 
-function generateOptions(answer) {
+function generateOptions(answer, count) {
   const wrong = new Set()
-  const offsets = [1, 2, 3, 5, 10]
+  const offsets = [1, 2, 3, 5, 8, 10]
+  let attempts = 0
 
-  while (wrong.size < 2) {
+  while (wrong.size < count - 1 && attempts < 50) {
+    attempts++
     const offset = offsets[Math.floor(Math.random() * offsets.length)]
     const sign = Math.random() < 0.5 ? 1 : -1
     const val = answer + sign * offset
-    if (val > 0 && val !== answer) {
-      wrong.add(val)
-    }
+    if (val > 0 && val !== answer) wrong.add(val)
   }
 
   const options = [answer, ...wrong]
-  // 随机打乱顺序
   for (let i = options.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [options[i], options[j]] = [options[j], options[i]]
@@ -94,4 +107,4 @@ function generateOptions(answer) {
   return options
 }
 
-module.exports = { generateQuestion }
+module.exports = { generateQuestion, generateOptions, getOptionCount, getFallDuration, getStageName }

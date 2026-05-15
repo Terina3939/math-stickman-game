@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/levels/levels",
     "pages/battle/battle",
-    "pages/result/result"
+    "pages/result/result",
+    "pages/leaderboard/leaderboard"
   ],
   "window": {
     "backgroundTextStyle": "dark",

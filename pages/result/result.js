@@ -1,23 +1,45 @@
-// pages/result/result.js
+const { getStageName } = require('../../utils/mathGenerator')
+const app = getApp()
+
 Page({
   data: {
-    isWin: false,
+    isLose: false,
     difficulty: 'easy',
-    level: 1
+    level: 1,
+    stageName: '',
+    playerName: '',
+    saved: false
   },
 
   onLoad(options) {
+    const level = parseInt(options.level) || 1
     this.setData({
-      isWin: options.result === 'win',
+      isLose: options.result === 'lose',
       difficulty: options.difficulty || 'easy',
-      level: parseInt(options.level) || 1
+      level,
+      stageName: getStageName(level)
     })
   },
 
+  onNameInput(e) {
+    this.setData({ playerName: e.detail.value })
+  },
+
+  saveScore() {
+    const { playerName, difficulty, level, stageName } = this.data
+    if (!playerName) return
+    app.saveScore(difficulty, playerName, level, stageName)
+    this.setData({ saved: true })
+  },
+
   retry() {
-    const { difficulty, level } = this.data
-    wx.redirectTo({
-      url: `/pages/battle/battle?difficulty=${difficulty}&level=${level}`
+    const { difficulty } = this.data
+    wx.reLaunch({ url: `/pages/battle/battle?difficulty=${difficulty}&level=1` })
+  },
+
+  goLeaderboard() {
+    wx.navigateTo({
+      url: `/pages/leaderboard/leaderboard?difficulty=${this.data.difficulty}`
     })
   },
 

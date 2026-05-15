@@ -1,15 +1,37 @@
-<!-- pages/result/result.wxml -->
 <view class="container">
 
   <view class="result-area">
-    <text class="result-emoji">{{isWin ? '🏆' : '💀'}}</text>
-    <text class="result-title">{{isWin ? '关卡胜利！' : '游戏结束'}}</text>
-    <text class="result-sub">{{isWin ? '怪物被消灭了！' : '勇士倒下了...'}}</text>
+    <text class="result-emoji">{{isLose ? '💀' : '🏆'}}</text>
+    <text class="result-title">{{isLose ? '游戏结束' : '主动结算'}}</text>
+    <text class="result-sub">通过了 {{level}} 关</text>
+    <text class="result-stage">阶段：{{stageName}}</text>
+  </view>
+
+  <!-- 输入名字保存成绩 -->
+  <view class="save-area" wx:if="{{!saved}}">
+    <text class="save-label">输入你的名字上榜：</text>
+    <input
+      class="name-input"
+      placeholder="请输入名字（最多8字）"
+      maxlength="8"
+      bindinput="onNameInput"
+      value="{{playerName}}"
+    />
+    <view class="save-btn {{playerName ? '' : 'disabled'}}" bindtap="saveScore">
+      <text>💾 保存成绩</text>
+    </view>
+  </view>
+
+  <view class="saved-tip" wx:if="{{saved}}">
+    <text>✅ 成绩已保存！</text>
   </view>
 
   <view class="btn-area">
     <view class="btn-retry" bindtap="retry">
-      <text>🔄 再来一次</text>
+      <text>🔄 再玩一次</text>
+    </view>
+    <view class="btn-board" bindtap="goLeaderboard">
+      <text>🏆 查看排行榜</text>
     </view>
     <view class="btn-home" bindtap="goHome">
       <text>🏠 返回主页</text>

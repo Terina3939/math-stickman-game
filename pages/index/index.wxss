@@ -100,3 +100,13 @@
   color: rgba(255,255,255,0.8);
   margin-top: 6rpx;
 }
+
+.leaderboard-btn {
+  margin-top: 40rpx;
+  padding: 20rpx 60rpx;
+  background: rgba(255,255,255,0.08);
+  border: 2rpx solid #f5a623;
+  border-radius: 40rpx;
+  color: #f5a623;
+  font-size: 28rpx;
+}

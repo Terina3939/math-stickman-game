@@ -1,0 +1,41 @@
+<view class="container">
+
+  <view class="header">
+    <text class="title">🏆 排行榜</text>
+  </view>
+
+  <!-- 难度切换 -->
+  <view class="tabs">
+    <view class="tab {{activeTab === 'easy' ? 'active' : ''}}" bindtap="switchTab" data-tab="easy">
+      <text>⭐ 初级</text>
+    </view>
+    <view class="tab {{activeTab === 'medium' ? 'active' : ''}}" bindtap="switchTab" data-tab="medium">
+      <text>⭐⭐ 中级</text>
+    </view>
+    <view class="tab {{activeTab === 'hard' ? 'active' : ''}}" bindtap="switchTab" data-tab="hard">
+      <text>⭐⭐⭐ 高级</text>
+    </view>
+  </view>
+
+  <!-- 榜单列表 -->
+  <view class="list" wx:if="{{list.length > 0}}">
+    <view class="list-item {{index < 3 ? 'top' : ''}}" wx:for="{{list}}" wx:key="index">
+      <text class="rank">{{index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : index + 1}}</text>
+      <view class="info">
+        <text class="name">{{item.name}}</text>
+        <text class="detail">{{item.stage}}阶段 · {{item.time}}</text>
+      </view>
+      <text class="score">第{{item.level}}关</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{list.length === 0}}">
+    <text class="empty-icon">📭</text>
+    <text class="empty-text">暂无记录，快去挑战吧！</text>
+  </view>
+
+  <view class="back-btn" bindtap="goBack">
+    <text>← 返回</text>
+  </view>
+
+</view>

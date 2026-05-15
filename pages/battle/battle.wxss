@@ -1,4 +1,3 @@
-/* pages/battle/battle.wxss */
 .container {
   min-height: 100vh;
   background: linear-gradient(180deg, #0d0d1a 0%, #1a1a2e 60%, #16213e 100%);
@@ -14,45 +13,41 @@
   align-items: center;
   justify-content: space-between;
   padding: 20rpx 30rpx;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.5);
   border-bottom: 2rpx solid #333366;
 }
 
-.hp-area, .monster-hp-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6rpx;
-}
-
-.hp-label {
-  font-size: 20rpx;
-  color: #aaaacc;
-}
-
-.hp-hearts {
+.hp-area {
   display: flex;
   gap: 4rpx;
 }
 
-.heart {
-  font-size: 28rpx;
-  transition: all 0.3s;
+.heart { font-size: 30rpx; transition: all 0.3s; }
+.heart.dead { filter: grayscale(100%); opacity: 0.3; }
+
+.stage-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.heart.dead {
-  filter: grayscale(100%);
-  opacity: 0.3;
-}
-
-.level-info {
-  text-align: center;
+.stage-name {
+  font-size: 20rpx;
+  color: #f5a623;
+  font-weight: bold;
 }
 
 .level-text {
-  font-size: 28rpx;
+  font-size: 26rpx;
+  color: #ffffff;
   font-weight: bold;
-  color: #f5a623;
+}
+
+.monster-hp-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6rpx;
 }
 
 .monster-hp-bar {
@@ -80,15 +75,15 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 40rpx 20rpx;
-  height: 300rpx;
+  padding: 30rpx 20rpx;
+  height: 280rpx;
 }
 
 .player-side, .monster-side {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10rpx;
+  gap: 8rpx;
   position: relative;
 }
 
@@ -105,6 +100,7 @@
   opacity: 0;
   transform: translateY(10rpx);
   transition: all 0.3s;
+  z-index: 10;
 }
 
 .question-bubble.visible {
@@ -122,23 +118,14 @@
   border-top-color: #ffffff;
 }
 
-.question-text {
-  font-size: 26rpx;
-}
+.stickman { font-size: 100rpx; display: block; }
+.monster  { font-size: 100rpx; display: block; }
+.role-label { font-size: 20rpx; color: #888899; }
 
-.stickman {
-  font-size: 100rpx;
-  display: block;
-  transition: transform 0.3s;
-}
-
-.attack-anim {
-  animation: playerAttack 0.6s ease;
-}
-
+.attack-anim { animation: playerAttack 0.5s ease; }
 @keyframes playerAttack {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(40rpx); }
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(40rpx); }
   100% { transform: translateX(0); }
 }
 
@@ -146,81 +133,78 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 120rpx;
+  width: 100rpx;
 }
 
-.wave {
-  font-size: 60rpx;
-  opacity: 0;
-}
-
-.wave-anim {
-  animation: waveMove 0.6s ease forwards;
-}
-
+.wave { font-size: 60rpx; opacity: 0; }
+.wave-anim { animation: waveMove 0.5s ease forwards; }
 @keyframes waveMove {
-  0% { opacity: 1; transform: translateX(-60rpx) scale(0.5); }
-  50% { opacity: 1; transform: translateX(0) scale(1.2); }
+  0%   { opacity: 1; transform: translateX(-60rpx) scale(0.5); }
+  50%  { opacity: 1; transform: translateX(0) scale(1.2); }
   100% { opacity: 0; transform: translateX(40rpx) scale(0.8); }
 }
 
-.monster {
-  font-size: 100rpx;
-  display: block;
-  transition: transform 0.3s;
-}
-
-.hit-anim {
-  animation: monsterHit 0.4s ease;
-}
-
+.hit-anim { animation: monsterHit 0.4s ease; }
 @keyframes monsterHit {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(20rpx) rotate(10deg); }
-  75% { transform: translateX(-10rpx) rotate(-5deg); }
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(20rpx) rotate(10deg); }
+  75%     { transform: translateX(-10rpx) rotate(-5deg); }
 }
 
-.monster-attack-anim {
-  animation: monsterAttack 0.7s ease;
-}
-
+.monster-attack-anim { animation: monsterAttack 0.6s ease; }
 @keyframes monsterAttack {
-  0% { transform: translateX(0); }
-  40% { transform: translateX(-50rpx) scale(1.2); }
+  0%   { transform: translateX(0); }
+  40%  { transform: translateX(-50rpx) scale(1.2); }
   100% { transform: translateX(0) scale(1); }
 }
 
-.role-label {
-  font-size: 22rpx;
-  color: #888899;
+/* 倒计时进度条 */
+.timer-bar-wrap {
+  height: 10rpx;
+  background: #222244;
+  margin: 0 30rpx;
+  border-radius: 5rpx;
+  overflow: hidden;
 }
 
-/* 掉落选项区域 */
+.timer-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #38ef7d, #f5a623, #ff4444);
+  border-radius: 5rpx;
+  animation: timerShrink linear forwards;
+  transform-origin: left;
+}
+
+@keyframes timerShrink {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+/* 掉落选项 */
 .falling-area {
   position: relative;
-  height: 280rpx;
-  margin: 0 20rpx;
+  height: 300rpx;
+  margin: 10rpx 0;
 }
 
 .option-item {
   position: absolute;
-  top: 0;
   background: linear-gradient(135deg, #0f3460, #533483);
   border: 2rpx solid #8866ff;
   border-radius: 16rpx;
-  width: 160rpx;
-  height: 80rpx;
+  width: 150rpx;
+  height: 76rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fallDown 1.5s ease forwards;
-  cursor: pointer;
+  animation: fallDown linear forwards;
 }
 
 @keyframes fallDown {
-  0% { top: -80rpx; opacity: 0; }
-  30% { opacity: 1; }
-  100% { top: 180rpx; opacity: 1; }
+  0%   { top: -80rpx; opacity: 0; }
+  15%  { opacity: 1; }
+  100% { top: 220rpx; opacity: 1; }
 }
 
 .option-text {
@@ -232,7 +216,7 @@
 /* 反馈 */
 .feedback {
   position: fixed;
-  bottom: 80rpx;
+  bottom: 100rpx;
   left: 50%;
   transform: translateX(-50%);
   padding: 16rpx 50rpx;
@@ -240,19 +224,57 @@
   font-size: 32rpx;
   font-weight: bold;
   animation: fadeIn 0.3s ease;
+  z-index: 100;
 }
 
-.correct {
-  background: rgba(56, 239, 125, 0.9);
-  color: #003300;
-}
-
-.wrong {
-  background: rgba(255, 80, 80, 0.9);
-  color: #ffffff;
-}
+.correct { background: rgba(56,239,125,0.92); color: #003300; }
+.wrong   { background: rgba(255,80,80,0.92); color: #ffffff; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateX(-50%) translateY(20rpx); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* 通关区域 */
+.next-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24rpx;
+  padding: 40rpx;
+}
+
+.next-title {
+  font-size: 52rpx;
+  font-weight: bold;
+  color: #f5a623;
+}
+
+.next-sub {
+  font-size: 28rpx;
+  color: #aaaacc;
+}
+
+.next-btn {
+  width: 500rpx;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  border-radius: 20rpx;
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #003300;
+}
+
+.settle-btn {
+  width: 500rpx;
+  padding: 30rpx;
+  background: rgba(255,255,255,0.05);
+  border: 2rpx solid #f5a623;
+  border-radius: 20rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #f5a623;
 }

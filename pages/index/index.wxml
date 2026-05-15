@@ -1,4 +1,3 @@
-<!-- pages/index/index.wxml -->
 <view class="container">
   <view class="title-area">
     <text class="game-title">🔥 数学火柴人</text>
@@ -12,13 +11,13 @@
   </view>
 
   <view class="difficulty-area">
-    <text class="choose-text">选择难度</text>
+    <text class="choose-text">选择难度开始游戏</text>
 
     <view class="diff-btn easy" bindtap="selectDifficulty" data-level="easy">
       <text class="diff-icon">⭐</text>
       <view class="diff-info">
         <text class="diff-name">初级</text>
-        <text class="diff-desc">加减法 · 5关</text>
+        <text class="diff-desc">加减法 · 轻松入门</text>
       </view>
     </view>
 
@@ -26,7 +25,7 @@
       <text class="diff-icon">⭐⭐</text>
       <view class="diff-info">
         <text class="diff-name">中级</text>
-        <text class="diff-desc">乘除法 · 8关</text>
+        <text class="diff-desc">乘除法 · 挑战自我</text>
       </view>
     </view>
 
@@ -34,8 +33,12 @@
       <text class="diff-icon">⭐⭐⭐</text>
       <view class="diff-info">
         <text class="diff-name">高级</text>
-        <text class="diff-desc">混合运算 · 10关</text>
+        <text class="diff-desc">混合运算 · 极限挑战</text>
       </view>
     </view>
+  </view>
+
+  <view class="leaderboard-btn" bindtap="goLeaderboard">
+    <text>🏆 查看排行榜</text>
   </view>
 </view>
